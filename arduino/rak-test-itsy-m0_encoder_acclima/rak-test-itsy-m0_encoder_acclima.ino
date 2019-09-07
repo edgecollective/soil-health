@@ -38,7 +38,7 @@
 //#include <LoraEncoder.h>
 #include <LoraMessage.h>
 
-
+#define decoder_divider 500
 
 #include <SDI12.h>
 
@@ -442,15 +442,23 @@ char i = '0';
         float temp = 24.5;
         float humidity = 33.;
 
-        float p = params[0] / 100.;
+        static uint8_t payload[2*num_params];
+        
+        for (int pi=0;pi<num_params;pi++) {
+        Serial.print("pi=");
+        Serial.println(pi);
+        Serial.println(params[pi]);
+        int pj=pi*2;
+        Serial.println(pj);
+        
+        float p = params[pi] / decoder_divider;
         uint16_t paramPayload = LMIC_f2sflt16(p);
         byte p_low = lowByte(paramPayload);
         byte p_high = highByte(paramPayload);
         
-        static uint8_t payload[2];
-
-        payload[0]=p_low;
-        payload[1]=p_high;
+        payload[pj]=p_low;
+        payload[pj+1]=p_high;
+        }
         
         
         //LoraEncoder encoder(mydata);
@@ -463,10 +471,15 @@ char i = '0';
         
         // Prepare upstream data transmission at the next possible time.
         //LMIC_setTxData2(1, mydata, sizeof(mydata)-1, 0);
+        Serial.print("Payload size=");
         Serial.println(sizeof(payload));
         
+        //Serial.println(sizeof(payload));
+        
         //LMIC_setTxData2(1, message.getBytes(), sizeof(message.getBytes()), 0);
-        LMIC_setTxData2(1, payload,sizeof(payload)-1, 0);
+
+        // NOTE: why does everyone else's code seem to use "sizeof(payload)-1' here?  Need to check out code ...
+        LMIC_setTxData2(1, payload,sizeof(payload), 0);
 
         //delete message;
         digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)

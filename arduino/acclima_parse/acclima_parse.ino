@@ -81,6 +81,19 @@ SDI12 mySDI12(DATA_PIN);
 // variable that alternates output type back and forth between parsed and raw
 boolean flip = 1;
 
+// https://acclima.com/prodlit/TDR%20User%20Manual.pdf
+
+#define num_params 5
+float params[num_params]; // acclima params
+
+/*
+float vwv; // volumetric water content %
+float ttt; // soil temp degrees C
+float ppp; // soil permittivity 
+float eeee; // soil bulk EC in uS/cm 
+float cccc; // osil pore water EC in uS/cm
+*/
+
 // The code below alternates printing in non-parsed, and parsed mode.
 //
 // The parseInt() and parseFloat() functions will timeout if they do not
@@ -148,33 +161,13 @@ void printInfo(char i){
 
 void printBufferToScreen(){
 
-/*
-  if(flip){    // print out the buffer as a string, as in example D
-    // boolean firstPass = true;
-    String buffer = "";
-    mySDI12.read(); // consume address
-    while(mySDI12.available()){
-      char c = mySDI12.read();
-      if(c == '+' || c == '-'){
-        buffer += ',';
-        if(c == '-') buffer += '-';
-      }
-      else {
-        buffer += c;
-      }
-    //   firstPass = false;
-      delay(100);
-    }
-    Serial.print(buffer);
-  }
-  */
-  //else {       // parse buffer for floats and multiply by 2 before printing
     mySDI12.read();  // discard address
     int param = 0;
     while(mySDI12.available()){
         float that = mySDI12.parseFloat();
         if(that != mySDI12.TIMEOUT){    //check for timeout
           //float doubleThat = that * 2;
+          params[param]=that;
           
           Serial.print("\n");
           Serial.print("param ");
@@ -185,16 +178,39 @@ void printBufferToScreen(){
           //Serial.print(" x 2 = ");
           //Serial.print(doubleThat);
         }
-        /*
-        else {
-          Serial.print(", TIMEOUT:");
-          Serial.print(that);
-        }
-        */
+      
     }
     Serial.println();
- // }
+
 }
+
+
+void getParams(){
+
+    mySDI12.read();  // discard address
+    int param = 0;
+    while(mySDI12.available()){
+        float that = mySDI12.parseFloat();
+        if(that != mySDI12.TIMEOUT){    //check for timeout
+          //float doubleThat = that * 2;
+          params[param]=that;
+          
+          //Serial.print("\n");
+          //Serial.print("param ");
+          //Serial.print(param);
+          //Serial.print(" = ");
+          //Serial.println(that);
+          param++;
+          //Serial.print(" x 2 = ");
+          //Serial.print(doubleThat);
+        }
+      
+    }
+    Serial.println();
+
+}
+
+
 
 void takeMeasurement(char i){
   String command = "";
@@ -243,7 +259,10 @@ void takeMeasurement(char i){
   mySDI12.sendCommand(command);
   while(!(mySDI12.available()>1)){}  // wait for acknowlegement
   delay(300); // let the data transfer
-  printBufferToScreen();
+  
+  //printBufferToScreen();
+  getParams();
+  
   mySDI12.clearBuffer();
 }
 
@@ -309,75 +328,25 @@ void setup(){
   mySDI12.begin();
   delay(500); // allow things to settle
 
- // Serial.println("Timeout value: ");
- // Serial.println(mySDI12.TIMEOUT);
-
-  // Power the sensors;
-  /*
-  if(POWER_PIN > 0){
-    Serial.println("Powering up sensors...");
-    pinMode(POWER_PIN, OUTPUT);
-    digitalWrite(POWER_PIN, HIGH);
-    delay(200);
-  }
-  */
-
-  //Serial.println("Scanning all addresses, please wait...");
-  /*
-      Quickly Scan the Address Space
-   */
-
-/*
-  for(byte i = '0'; i <= '9'; i++) if(checkActive(i)) {numSensors++; setTaken(i);}   // scan address space 0-9
-
-  for(byte i = 'a'; i <= 'z'; i++) if(checkActive(i)) {numSensors++; setTaken(i);}   // scan address space a-z
-
-  for(byte i = 'A'; i <= 'Z'; i++) if(checkActive(i)) {numSensors++; setTaken(i);}   // scan address space A-Z
-*/
-
-  /*
-      See if there are any active sensors.
-   */
-
-   /*
-  boolean found = false;
-
-  for(byte i = 0; i < 62; i++){
-    if(isTaken(i)){
-      found = true;
-      Serial.print("First address found:  ");
-      Serial.println(decToChar(i));
-      Serial.print("Total number of sensors found:  ");
-      Serial.println(numSensors);
-      break;
-    }
-  }
-
-  if(!found) {
-    Serial.println("No sensors found, please check connections and restart the Arduino.");
-    while(true);
-  } // stop here
-
-  Serial.println();
-  Serial.println("Time Elapsed (s), Sensor Address and ID, Measurement 1, Measurement 2, ... etc.");
-  Serial.println("-------------------------------------------------------------------------------");
-  */
+ 
 }
 
 void loop(){
 
-  //flip = !flip; // flip the switch between parsing and not parsing
-   flip = 0;
-  // scan address space 0-9
-  //for(char i = '0'; i <= '9'; i++) if(isTaken(i)){
+  
+   //flip = 0;
   char i = '0';
-    //Serial.print(millis()/1000);
-    //Serial.print(",\t");
-    printInfo(i);
-    //Serial.print(",\t");
+   
+    //printInfo(i);  
     takeMeasurement(i);
+    for (int p=0;p<num_params;p++) {
+      Serial.print("param ");
+      Serial.print(p);
+      Serial.print(" = ");
+      Serial.println(params[p]);
+    }
     Serial.println();
- // }
+    
 
   delay(3000); // wait ten seconds between measurement attempts.
 

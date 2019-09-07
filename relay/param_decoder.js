@@ -18,7 +18,10 @@ const private_key='8f9a953aa492cc0864a92f2651f530af'
 const num_params=5
 const decoder_divider = 500
 
-var paramList = ["Vol. Water Content (%)","Soil Temp (C)","Soil Permittivity","Soil Bulk EC (uS/cm)","Soil Pore Water EC (uS/cm)"]
+//var paramList = ["Vol. Water Content (%)","Soil Temp (C)","Soil Permittivity","Soil Bulk EC (uS/cm)","Soil Pore Water EC (uS/cm)"]
+
+var paramList = ["a","b","c","d","e"]
+
 //https://learn.adafruit.com/the-things-network-for-feather/payload-decoding
 
 //function Decoder(bytes, port) {

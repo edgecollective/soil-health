@@ -12,8 +12,8 @@ app.use(bodyParser.json())
 
 const base_url='https://edgecollective.farmos.net/farm/sensor/listener/'
 
-const public_key='d57fa2bd03e20408d17eb1d5ee58c9d6'
-const private_key='edac3534c121c8d241719a2ba853acd3'
+const public_key='d064713c899f40eab78bb0e899ff58ac'
+const private_key='4e2a489f053c5d762560402225933e9a'
 
 app.post("/", function(req,response){
 	response.status(200).send(req.body);

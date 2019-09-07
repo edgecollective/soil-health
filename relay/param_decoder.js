@@ -18,6 +18,7 @@ const private_key='4e2a489f053c5d762560402225933e9a'
 const num_params=5
 const decoder_divider = 500
 
+var paramList = ["Vol. Water Content (%)","Soil Temp (C)","Soil Permittivity","Soil Bulk EC (uS/cm)","Soil Pore Water EC (uS/cm)"]
 //https://learn.adafruit.com/the-things-network-for-feather/payload-decoding
 
 //function Decoder(bytes, port) {
@@ -34,11 +35,12 @@ function Decoder(bytes,num_params) {
 
     rawValue = bytes[j] + bytes[j+1] * 256;
     
-    var keyname = "param"+i.toString()
-    console.log(keyname)
+    //var keyname = "param"+i.toString()
+    //console.log(keyname)
 
     //decoded.keyname = sflt162f(rawValue) * 500;
-    decoded[keyname] = sflt162f(rawValue) * 500;
+    //decoded[keyname] = sflt162f(rawValue) * 500;
+    decoded[paramList[i]] = sflt162f(rawValue) * 500;
     
     
 }

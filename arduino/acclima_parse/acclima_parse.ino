@@ -1,73 +1,3 @@
-/*
-########################
-#        OVERVIEW      #
-########################
-
- Example E: This example demonstrates the ability to parse integers and floats from the buffer.
- It is based closely on example D, however, every other time it prints out data, it multiplies the data by a factor of 2.
- Time Elapsed (s), Sensor Address and ID, Measurement 1, Measurement 2, ... etc.
- -------------------------------------------------------------------------------
- 6,c13SENSOR ATM    311,0.62 x 2 = 1.24,19.80 x 2 = 39.60
- 17,c13SENSOR ATM   311,0.62,19.7
- 29,c13SENSOR ATM   311,0.62 x 2 = 1.2419.70 x 2 = 39.40
- 41,c13SENSOR ATM   311,0.62,19.8
- This is a trivial and nonsensical example, but it does demonstrate the ability to manipulate incoming data.
- At this point in the example series, the most relavent function to study is printBufferToScreen().
-Other notes:
-
- This is a simple demonstration of the SDI-12 library for Arduino.
-
- It discovers the address of all sensors active on a single bus and takes measurements from them.
- Every SDI-12 device is different in the time it takes to take a measurement, and the amount of data it returns.
- This sketch will not serve every sensor type, but it will likely be helpful in getting you started.
- Each sensor should have a unique address already - if not, multiple sensors may respond simultaenously
- to the same request and the output will not be readable by the Arduino.
-
- To address a sensor, please see Example B: b_address_change.ino
-
-#########################
-#      THE CIRCUIT      #
-#########################
-
- You  may use one or more pre-adressed sensors.
-
- See:
- https://raw.github.com/Kevin-M-Smith/SDI-12-Circuit-Diagrams/master/basic_setup_usb_multiple_sensors.png
- or
- https://raw.github.com/Kevin-M-Smith/SDI-12-Circuit-Diagrams/master/compat_setup_usb_multiple_sensors.png
- or
- https://raw.github.com/Kevin-M-Smith/SDI-12-Circuit-Diagrams/master/basic_setup_usb.png
- or
- https://raw.github.com/Kevin-M-Smith/SDI-12-Circuit-Diagrams/master/compat_setup_usb.png
-
-###########################
-#      COMPATIBILITY      #
-###########################
-
- This library requires the use of pin change interrupts (PCINT).
- Not all Arduino boards have the same pin capabilities.
- The known compatibile pins for common variants are shown below.
-
- Arduino Uno: 	All pins.
-
- Arduino Mega or Mega 2560:
- 10, 11, 12, 13, 14, 15, 50, 51, 52, 53, A8 (62),
- A9 (63), A10 (64), A11 (65), A12 (66), A13 (67), A14 (68), A15 (69).
-
- Arduino Leonardo:
- 8, 9, 10, 11, 14 (MISO), 15 (SCK), 16 (MOSI)
-
-#########################
-#      RESOURCES        #
-#########################
-
- Written by Kevin M. Smith in 2013.
- Contact: SDI12@ethosengineering.org
-
- The SDI-12 specification is available at: http://www.sdi-12.org/
- The library is available at: https://github.com/EnviroDIY/Arduino-SDI-12
-*/
-
 
 #include <SDI12.h>
 
@@ -86,30 +16,6 @@ boolean flip = 1;
 #define num_params 5
 float params[num_params]; // acclima params
 
-/*
-float vwv; // volumetric water content %
-float ttt; // soil temp degrees C
-float ppp; // soil permittivity 
-float eeee; // soil bulk EC in uS/cm 
-float cccc; // osil pore water EC in uS/cm
-*/
-
-// The code below alternates printing in non-parsed, and parsed mode.
-//
-// The parseInt() and parseFloat() functions will timeout if they do not
-// find a candidate INT or FLOAT.  The value returned when a such a timeout is
-// encountered is set in SDI12.cpp by default to -9999.  You can change the
-// default setting directly with the setTimeoutValue function:
-//       mySDI12.setTimeoutValue(int)
-// The value should not be a possible data value.
-//
-// You should always check for timeouts before interpreting data, as
-// shown in the example below.
-
-// keeps track of active addresses
-// each bit represents an address:
-// 1 is active (taken), 0 is inactive (available)
-// setTaken('A') will set the proper bit for sensor 'A'
 byte addressRegister[8] = {
   0B00000000,
   0B00000000,
@@ -122,7 +28,6 @@ byte addressRegister[8] = {
 };
 
 uint8_t numSensors = 0;
-
 
 // converts allowable address characters '0'-'9', 'a'-'z', 'A'-'Z',
 // to a decimal number between 0 and 61 (inclusive) to cover the 62 possible addresses
@@ -209,8 +114,6 @@ void getParams(){
     Serial.println();
 
 }
-
-
 
 void takeMeasurement(char i){
   String command = "";
@@ -333,8 +236,6 @@ void setup(){
 
 void loop(){
 
-  
-   //flip = 0;
   char i = '0';
    
     //printInfo(i);  

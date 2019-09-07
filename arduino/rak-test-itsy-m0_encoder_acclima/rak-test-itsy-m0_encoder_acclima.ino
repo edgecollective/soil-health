@@ -39,6 +39,7 @@
 #include <LoraMessage.h>
 
 
+
 #include <SDI12.h>
 
 #define SERIAL_BAUD 115200  // The baud rate for the output serial port
@@ -51,22 +52,11 @@ SDI12 mySDI12(DATA_PIN);
 // variable that alternates output type back and forth between parsed and raw
 boolean flip = 1;
 
-// The code below alternates printing in non-parsed, and parsed mode.
-//
-// The parseInt() and parseFloat() functions will timeout if they do not
-// find a candidate INT or FLOAT.  The value returned when a such a timeout is
-// encountered is set in SDI12.cpp by default to -9999.  You can change the
-// default setting directly with the setTimeoutValue function:
-//       mySDI12.setTimeoutValue(int)
-// The value should not be a possible data value.
-//
-// You should always check for timeouts before interpreting data, as
-// shown in the example below.
+// https://acclima.com/prodlit/TDR%20User%20Manual.pdf
 
-// keeps track of active addresses
-// each bit represents an address:
-// 1 is active (taken), 0 is inactive (available)
-// setTaken('A') will set the proper bit for sensor 'A'
+#define num_params 5
+float params[num_params]; // acclima params
+
 byte addressRegister[8] = {
   0B00000000,
   0B00000000,
@@ -79,7 +69,6 @@ byte addressRegister[8] = {
 };
 
 uint8_t numSensors = 0;
-
 
 // converts allowable address characters '0'-'9', 'a'-'z', 'A'-'Z',
 // to a decimal number between 0 and 61 (inclusive) to cover the 62 possible addresses
@@ -124,12 +113,39 @@ void printBufferToScreen(){
         float that = mySDI12.parseFloat();
         if(that != mySDI12.TIMEOUT){    //check for timeout
           //float doubleThat = that * 2;
+          params[param]=that;
           
           Serial.print("\n");
           Serial.print("param ");
           Serial.print(param);
           Serial.print(" = ");
           Serial.println(that);
+          param++;
+          //Serial.print(" x 2 = ");
+          //Serial.print(doubleThat);
+        }
+      
+    }
+    Serial.println();
+
+}
+
+
+void getParams(){
+
+    mySDI12.read();  // discard address
+    int param = 0;
+    while(mySDI12.available()){
+        float that = mySDI12.parseFloat();
+        if(that != mySDI12.TIMEOUT){    //check for timeout
+          //float doubleThat = that * 2;
+          params[param]=that;
+          
+          //Serial.print("\n");
+          //Serial.print("param ");
+          //Serial.print(param);
+          //Serial.print(" = ");
+          //Serial.println(that);
           param++;
           //Serial.print(" x 2 = ");
           //Serial.print(doubleThat);
@@ -187,7 +203,10 @@ void takeMeasurement(char i){
   mySDI12.sendCommand(command);
   while(!(mySDI12.available()>1)){}  // wait for acknowlegement
   delay(300); // let the data transfer
-  printBufferToScreen();
+  
+  //printBufferToScreen();
+  getParams();
+  
   mySDI12.clearBuffer();
 }
 
@@ -243,6 +262,7 @@ boolean setVacant(byte i){
   addressRegister[j] &= ~(1 << k);
   return initStatus; // return false if already vacant
 }
+
 
 
 // Radio stuff
@@ -407,26 +427,46 @@ void do_send(osjob_t* j){
 
 char i = '0';
    
-    printInfo(i);
-   
-    takeMeasurement(i);
+     takeMeasurement(i);
+    for (int p=0;p<num_params;p++) {
+      Serial.print("param ");
+      Serial.print(p);
+      Serial.print(" = ");
+      Serial.println(params[p]);
+    }
+    Serial.println();
 
     
         //float temp = dht.readTemperature();
         //float humidity = dht.readHumidity();
         float temp = 24.5;
         float humidity = 33.;
+
+        float p = params[0] / 100.;
+        uint16_t paramPayload = LMIC_f2sflt16(p);
+        byte p_low = lowByte(paramPayload);
+        byte p_high = highByte(paramPayload);
+        
+        static uint8_t payload[2];
+
+        payload[0]=p_low;
+        payload[1]=p_high;
+        
         
         //LoraEncoder encoder(mydata);
         //encoder.writeTemperature(-123.45);
-        LoraMessage message;
-        message.addTemperature(temp).addHumidity(humidity);
-
+        //LoraMessage message;
+        //message.addTemperature(params[0]).addHumidity(params[1]).addLatLng(params[0],params[1]);
+        //message.addHumidity(params[1]);
+        //.addTemperature(params[1]).addTemperature(params[2]).addTemperature(params[3]).addTemperature(params[4]);
+        //message.addTemperature(params[0]);
+        
         // Prepare upstream data transmission at the next possible time.
         //LMIC_setTxData2(1, mydata, sizeof(mydata)-1, 0);
-        //Serial.println(sizeof(message.getBytes()));
+        Serial.println(sizeof(payload));
         
-        LMIC_setTxData2(1, message.getBytes(), sizeof(message.getBytes()), 0);
+        //LMIC_setTxData2(1, message.getBytes(), sizeof(message.getBytes()), 0);
+        LMIC_setTxData2(1, payload,sizeof(payload)-1, 0);
 
         //delete message;
         digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)

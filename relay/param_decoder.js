@@ -12,8 +12,8 @@ app.use(bodyParser.json())
 
 const base_url='https://edgecollective.farmos.net/farm/sensor/listener/'
 
-const public_key='d064713c899f40eab78bb0e899ff58ac'
-const private_key='4e2a489f053c5d762560402225933e9a'
+const public_key='df06cef247fff1f0ac595e427310cfe1'
+const private_key='8f9a953aa492cc0864a92f2651f530af'
 
 const num_params=5
 const decoder_divider = 500
@@ -109,11 +109,13 @@ app.post("/", function(req,response){
 
     var hex = req.body.object.DecodeDataHex.split(',')
     console.log(hex)
-    var tempBytes = new Buffer(hex)
-    var params = decoder.decode(tempBytes,[decoder.temperature,decoder.humidity],['temp','humidity']);
+    //var tempBytes = new Buffer(hex)
+    //var params = decoder.decode(tempBytes,[decoder.temperature,decoder.humidity],['temp','humidity']);
 
+    var mybytes = new Buffer(hex)
+    var myjson = Decoder(mybytes,num_params)
 
-    console.log(params)
+    console.log(myjson)
 	//var myvar = String('hello');
 
 	//console.log(myvar);
@@ -121,7 +123,7 @@ app.post("/", function(req,response){
 	request.post(
     post_url,
     //{ json: { 'temp': 23.,'moisture':32. } },
-    { json: { 'temp': params.temp, 'humidity':params.humidity } },  
+    { json: myjson },  
     function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(body);

@@ -43,11 +43,11 @@
 #include "DHT.h"
 
 // DHT digital pin and sensor type
-#define DHTPIN 10
+#define DHTPIN 12
 #define DHTTYPE DHT22
 
 // init. DHT
-//DHT dht(DHTPIN, DHTTYPE);
+DHT dht(DHTPIN, DHTTYPE);
 
 // This EUI must be in little-endian format, so least-significant-byte
 // first. When copying an EUI from ttnctl output, this means to reverse
@@ -73,7 +73,7 @@ static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
 // cycle limitations).
-const unsigned TX_INTERVAL = 10;
+const unsigned TX_INTERVAL = 300;
 
 
 // Pin mapping for Adafruit Feather M4 LoRa, etc.
@@ -205,10 +205,10 @@ void do_send(osjob_t* j){
         Serial.println(F("OP_TXRXPEND, not sending"));
     } else {
 
-        //float temp = dht.readTemperature();
-        //float humidity = dht.readHumidity();
-        float temp = 24.5;
-        float humidity = 33.;
+        float temp = dht.readTemperature();
+        float humidity = dht.readHumidity();
+        //float temp = 24.5;
+        //float humidity = 33.;
         
         //LoraEncoder encoder(mydata);
         //encoder.writeTemperature(-123.45);
@@ -222,20 +222,24 @@ void do_send(osjob_t* j){
         LMIC_setTxData2(1, message.getBytes(), sizeof(message.getBytes()), 0);
 
         //delete message;
-        
+        digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(100);                       // wait for a second
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(100);                       // wait for a second
         Serial.println(F("Packet queued"));
     }
     // Next TX is scheduled after TX_COMPLETE event.
 }
 
 void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
     delay(5000);
-    while (! Serial)
-        ;
+    //while (! Serial)
+    //    ;
     Serial.begin(9600);
     Serial.println(F("Starting"));
 
-    //dht.begin();
+    dht.begin();
     
     #ifdef VCC_ENABLE
     // For Pinoccio Scout boards

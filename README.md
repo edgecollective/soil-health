@@ -14,4 +14,4 @@ https://www.sparkfun.com/products/15336
 
 https://learn.adafruit.com/the-things-network-for-feather/payload-decoding
 
-
+https://acclima.com/prodlit/TDR%20User%20Manual.pdf

@@ -43,7 +43,7 @@ function Decoder(bytes,num_params) {
 
     //decoded.keyname = sflt162f(rawValue) * 500;
     //decoded[keyname] = sflt162f(rawValue) * 500;
-    decoded[paramList[i].toString()] = sflt162f(rawValue) * 500;
+    decoded[paramList[i].toString()] = (sflt162f(rawValue) * 500).toFixed(2);
     
     
 }
@@ -97,6 +97,7 @@ mybytes = Buffer([0x7f,0x6d,0xd0,0x5d,0x1d,0x6c,0x48,0x75,0xa0,0x76])
 var result = Decoder(mybytes,num_params)
 console.log("Happy",result)
 //console.log(result)
+
 
 
 app.post("/", function(req,response){

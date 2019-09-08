@@ -12,13 +12,13 @@ app.use(bodyParser.json())
 
 const base_url='https://edgecollective.farmos.net/farm/sensor/listener/'
 
-const public_key='df06cef247fff1f0ac595e427310cfe1'
-const private_key='8f9a953aa492cc0864a92f2651f530af'
+const public_key='6c2444d2b061c2492f45eaef279b6b38'
+const private_key='f0f0b85f4c4eae53ab126e97c2120a08' 
 
 const num_params=5
 const decoder_divider = 500
 
-var paramList = ['Volumetric H2O (%)','Soil Temp (C)','Soil Permittivity','Soil Bulk EC (uS/cm)','Soil Pore H2O EC (uS/cm)']
+var paramList = ['Volumetric Water Content (%)','Soil Temp (C)','Soil Permittivity','Soil Bulk EC (uS/cm)','Soil Pore Water EC (uS/cm)']
 
 //var paramList = ['a','b','c','d','e']
 

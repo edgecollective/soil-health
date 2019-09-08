@@ -230,15 +230,21 @@ void setup(){
   Serial.println("Opening SDI-12 bus...");
   mySDI12.begin();
   delay(500); // allow things to settle
+/*
+ for(byte i = '0'; i <= '9'; i++) if(checkActive(i)) {numSensors++; setTaken(i);}   // scan address space 0-9
 
- 
+  for(byte i = 'a'; i <= 'z'; i++) if(checkActive(i)) {numSensors++; setTaken(i);}   // scan address space a-z
+
+  for(byte i = 'A'; i <= 'Z'; i++) if(checkActive(i)) {numSensors++; setTaken(i);}   // scan address space A-Z
+
+*/
 }
 
 void loop(){
 
   char i = '0';
    
-    //printInfo(i);  
+    printInfo(i);  
     takeMeasurement(i);
     for (int p=0;p<num_params;p++) {
       Serial.print("param ");

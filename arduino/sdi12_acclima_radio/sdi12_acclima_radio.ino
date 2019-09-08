@@ -1,37 +1,75 @@
-/*******************************************************************************
- * Copyright (c) 2015 Thomas Telkamp and Matthijs Kooijman
- * Copyright (c) 2018 Terry Moore, MCCI
- *
- * Permission is hereby granted, free of charge, to anyone
- * obtaining a copy of this document and accompanying files,
- * to do whatever they want with them without any restriction,
- * including, but not limited to, copying, modification and redistribution.
- * NO WARRANTY OF ANY KIND IS PROVIDED.
- *
- * This example sends a valid LoRaWAN packet with payload "Hello,
- * world!", using frequency and encryption settings matching those of
- * the The Things Network. It's pre-configured for the Adafruit
- * Feather M0 LoRa.
- *
- * This uses OTAA (Over-the-air activation), where where a DevEUI and
- * application key is configured, which are used in an over-the-air
- * activation procedure where a DevAddr and session keys are
- * assigned/generated for use with all further communication.
- *
- * Note: LoRaWAN per sub-band duty-cycle limitation is enforced (1% in
- * g1, 0.1% in g2), but not the TTN fair usage policy (which is probably
- * violated by this sketch when left running for longer)!
+/*
+########################
+#        OVERVIEW      #
+########################
 
- * To use this sketch, first register your application and device with
- * the things network, to set or generate an AppEUI, DevEUI and AppKey.
- * Multiple devices can use the same AppEUI, but each device has its own
- * DevEUI and AppKey.
- *
- * Do not forget to define the radio type correctly in
- * arduino-lmic/project_config/lmic_project_config.h or from your BOARDS.txt.
- *
- *******************************************************************************/
+This is the "d_simple_logger" example from the standard SDI-12 library from Stroud; ran it on a Feather M0 microcontroller, using D7 as the data pin.
 
+Reference docs: 
+https://acclima.com/prodlit/Acclima%20TDR310H%20Data%20Sheet.pdf
+http://au.ictinternational.com/content/uploads/2017/04/TDR-315-User-Manual.pdf
+
+That last reference indicates:
+
+Power: red wire
+Data: blue wire
+Ground: white wire
+
+
+ Example D: Checks all addresses for active sensors, and logs data for each sensor every minute.
+
+ This is a simple demonstration of the SDI-12 library for Arduino.
+
+ It discovers the address of all sensors active on a single bus and takes measurements from them.
+ Every SDI-12 device is different in the time it takes to take a measurement, and the amount of data it returns.
+ This sketch will not serve every sensor type, but it will likely be helpful in getting you started.
+ Each sensor should have a unique address already - if not, multiple sensors may respond simultaenously
+ to the same request and the output will not be readable by the Arduino.
+
+ To address a sensor, please see Example B: b_address_change.ino
+
+#########################
+#      THE CIRCUIT      #
+#########################
+
+ You  may use one or more pre-adressed sensors.
+
+ See:
+ https://raw.github.com/Kevin-M-Smith/SDI-12-Circuit-Diagrams/master/basic_setup_usb_multiple_sensors.png
+ or
+ https://raw.github.com/Kevin-M-Smith/SDI-12-Circuit-Diagrams/master/compat_setup_usb_multiple_sensors.png
+ or
+ https://raw.github.com/Kevin-M-Smith/SDI-12-Circuit-Diagrams/master/basic_setup_usb.png
+ or
+ https://raw.github.com/Kevin-M-Smith/SDI-12-Circuit-Diagrams/master/compat_setup_usb.png
+
+###########################
+#      COMPATIBILITY      #
+###########################
+
+ This library requires the use of pin change interrupts (PCINT).
+ Not all Arduino boards have the same pin capabilities.
+ The known compatibile pins for common variants are shown below.
+
+ Arduino Uno:   All pins.
+
+ Arduino Mega or Mega 2560:
+ 10, 11, 12, 13, 14, 15, 50, 51, 52, 53, A8 (62),
+ A9 (63), A10 (64), A11 (65), A12 (66), A13 (67), A14 (68), A15 (69).
+
+ Arduino Leonardo:
+ 8, 9, 10, 11, 14 (MISO), 15 (SCK), 16 (MOSI)
+
+#########################
+#      RESOURCES        #
+#########################
+
+ Written by Kevin M. Smith in 2013.
+ Contact: SDI12@ethosengineering.org
+
+ The SDI-12 specification is available at: http://www.sdi-12.org/
+ The library is available at: https://github.com/EnviroDIY/Arduino-SDI-12
+*/
 #include <lmic.h>
 #include <hal/hal.h>
 #include <SPI.h>
@@ -49,14 +87,13 @@
 // Define the SDI-12 bus
 SDI12 mySDI12(DATA_PIN);
 
-// variable that alternates output type back and forth between parsed and raw
-boolean flip = 1;
-
-// https://acclima.com/prodlit/TDR%20User%20Manual.pdf
-
 #define num_params 5
 float params[num_params]; // acclima params
 
+// keeps track of active addresses
+// each bit represents an address:
+// 1 is active (taken), 0 is inactive (available)
+// setTaken('A') will set the proper bit for sensor 'A'
 byte addressRegister[8] = {
   0B00000000,
   0B00000000,
@@ -69,6 +106,7 @@ byte addressRegister[8] = {
 };
 
 uint8_t numSensors = 0;
+
 
 // converts allowable address characters '0'-'9', 'a'-'z', 'A'-'Z',
 // to a decimal number between 0 and 61 (inclusive) to cover the 62 possible addresses
@@ -83,10 +121,26 @@ byte charToDec(char i){
 // maps a decimal number between 0 and 61 (inclusive) to
 // allowable address characters '0'-'9', 'a'-'z', 'A'-'Z',
 char decToChar(byte i){
-  if(i <= 9) return i + '0';
+  if((i >= 0) && (i <= 9)) return i + '0';
   if((i >= 10) && (i <= 36)) return i + 'a' - 10;
   if((i >= 37) && (i <= 62)) return i + 'A' - 37;
   else return i;
+}
+
+void printBufferToScreen(){
+  String buffer = "";
+  mySDI12.read(); // consume address
+  while(mySDI12.available()){
+    char c = mySDI12.read();
+    if(c == '+'){
+      buffer += ',';
+    }
+    else if ((c != '\n') && (c != '\r')) {
+      buffer += c;
+    }
+    delay(50);
+  }
+ Serial.print(buffer);
 }
 
 // gets identification information from a sensor, and prints it to the serial port
@@ -96,64 +150,11 @@ void printInfo(char i){
   command += (char) i;
   command += "I!";
   mySDI12.sendCommand(command);
+  // Serial.print(">>>");
+  // Serial.println(command);
   delay(30);
 
-  while(mySDI12.available()){
-    char c = mySDI12.read();
-    if((c!='\n') && (c!='\r')) Serial.write(c);
-    delay(5);
-  }
-}
-
-void printBufferToScreen(){
-
-    mySDI12.read();  // discard address
-    int param = 0;
-    while(mySDI12.available()){
-        float that = mySDI12.parseFloat();
-        if(that != mySDI12.TIMEOUT){    //check for timeout
-          //float doubleThat = that * 2;
-          params[param]=that;
-          
-          Serial.print("\n");
-          Serial.print("param ");
-          Serial.print(param);
-          Serial.print(" = ");
-          Serial.println(that);
-          param++;
-          //Serial.print(" x 2 = ");
-          //Serial.print(doubleThat);
-        }
-      
-    }
-    Serial.println();
-
-}
-
-
-void getParams(){
-
-    mySDI12.read();  // discard address
-    int param = 0;
-    while(mySDI12.available()){
-        float that = mySDI12.parseFloat();
-        if(that != mySDI12.TIMEOUT){    //check for timeout
-          //float doubleThat = that * 2;
-          params[param]=that;
-          
-          //Serial.print("\n");
-          //Serial.print("param ");
-          //Serial.print(param);
-          //Serial.print(" = ");
-          //Serial.println(that);
-          param++;
-          //Serial.print(" x 2 = ");
-          //Serial.print(doubleThat);
-        }
-      
-    }
-    Serial.println();
-
+  printBufferToScreen();
 }
 
 void takeMeasurement(char i){
@@ -201,12 +202,9 @@ void takeMeasurement(char i){
   command += i;
   command += "D0!"; // SDI-12 command to get data [address][D][dataOption][!]
   mySDI12.sendCommand(command);
-  while(!(mySDI12.available()>1)){}  // wait for acknowlegement
+  while(!mySDI12.available()>1); // wait for acknowlegement
   delay(300); // let the data transfer
-  
-  //printBufferToScreen();
-  getParams();
-  
+  printBufferToScreen();
   mySDI12.clearBuffer();
 }
 
@@ -263,9 +261,11 @@ boolean setVacant(byte i){
   return initStatus; // return false if already vacant
 }
 
-
-
 // Radio stuff
+
+// Schedule TX every this many seconds (might become longer due to duty
+// cycle limitations).
+const unsigned TX_INTERVAL = 10;
 
 // This EUI must be in little-endian format, so least-significant-byte
 // first. When copying an EUI from ttnctl output, this means to reverse
@@ -289,9 +289,7 @@ void os_getDevKey (u1_t* buf) {  memcpy_P(buf, APPKEY, 16);}
 
 static osjob_t sendjob;
 
-// Schedule TX every this many seconds (might become longer due to duty
-// cycle limitations).
-const unsigned TX_INTERVAL = 10;
+
 
 // need to connect pin 12 to i01 on Feather M0
 // Pin mapping for Adafruit Feather M0 LoRa, etc.
@@ -353,7 +351,7 @@ void onEvent (ev_t ev) {
             }
             // Disable link check validation (automatically enabled
             // during join, but because slow data rates change max TX
-	    // size, we don't use it in this example.
+      // size, we don't use it in this example.
             LMIC_setLinkCheckMode(0);
             break;
         /*
@@ -425,9 +423,13 @@ void do_send(osjob_t* j){
 
 // SDI-12 stuff
 
+   static uint8_t payload[2*num_params];
+   
+/*
 char i = '0';
-     printInfo(i);
-     takeMeasurement(i);
+   
+     //takeMeasurement(i);
+     //getParams();
     for (int p=0;p<num_params;p++) {
       Serial.print("param ");
       Serial.print(p);
@@ -436,21 +438,31 @@ char i = '0';
     }
     Serial.println();
 
+ 
     
         //float temp = dht.readTemperature();
         //float humidity = dht.readHumidity();
         float temp = 24.5;
         float humidity = 33.;
 
-        float p = params[0] / decoder_divider;
+        //static uint8_t payload[2*num_params];
+        
+        for (int pi=0;pi<num_params;pi++) {
+        Serial.print("pi=");
+        Serial.println(pi);
+        Serial.println(params[pi]);
+        int pj=pi*2;
+        Serial.println(pj);
+        
+        float p = params[pi] / decoder_divider;
         uint16_t paramPayload = LMIC_f2sflt16(p);
         byte p_low = lowByte(paramPayload);
         byte p_high = highByte(paramPayload);
         
-        static uint8_t payload[2];
-
-        payload[0]=p_low;
-        payload[1]=p_high;
+        payload[pj]=p_low;
+        payload[pj+1]=p_high;
+        }
+        */
         
         
         //LoraEncoder encoder(mydata);
@@ -463,9 +475,14 @@ char i = '0';
         
         // Prepare upstream data transmission at the next possible time.
         //LMIC_setTxData2(1, mydata, sizeof(mydata)-1, 0);
+        Serial.print("Payload size=");
         Serial.println(sizeof(payload));
         
+        //Serial.println(sizeof(payload));
+        
         //LMIC_setTxData2(1, message.getBytes(), sizeof(message.getBytes()), 0);
+
+        // NOTE: why does everyone else's code seem to use "sizeof(payload)-1' here?  Need to check out code ...
         LMIC_setTxData2(1, payload,sizeof(payload), 0);
 
         //delete message;
@@ -478,26 +495,60 @@ char i = '0';
     // Next TX is scheduled after TX_COMPLETE event.
 }
 
-void setup() {
 
-   mySDI12.begin();
-  pinMode(LED_BUILTIN, OUTPUT);
-    delay(5000);
-    //while (! Serial)
-    //    ;
-    Serial.begin(9600);
-    Serial.println(F("Starting"));
+void setup(){
+  Serial.begin(SERIAL_BAUD);
+  while(!Serial);
 
-    //dht.begin();
-    
-    #ifdef VCC_ENABLE
-    // For Pinoccio Scout boards
-    pinMode(VCC_ENABLE, OUTPUT);
-    digitalWrite(VCC_ENABLE, HIGH);
-    delay(1000);
-    #endif
+  Serial.println("Opening SDI-12 bus...");
+  mySDI12.begin();
+  delay(500); // allow things to settle
 
-    // LMIC init
+  // Power the sensors;
+  if(POWER_PIN > 0){
+    Serial.println("Powering up sensors...");
+    pinMode(POWER_PIN, OUTPUT);
+    digitalWrite(POWER_PIN, HIGH);
+    delay(200);
+  }
+
+  Serial.println("Scanning all addresses, please wait...");
+  /*
+      Quickly Scan the Address Space
+   */
+
+  for(byte i = '0'; i <= '9'; i++) if(checkActive(i)) {numSensors++; setTaken(i);}   // scan address space 0-9
+
+  for(byte i = 'a'; i <= 'z'; i++) if(checkActive(i)) {numSensors++; setTaken(i);}   // scan address space a-z
+
+  for(byte i = 'A'; i <= 'Z'; i++) if(checkActive(i)) {numSensors++; setTaken(i);}   // scan address space A-Z
+
+  /*
+      See if there are any active sensors.
+   */
+  boolean found = false;
+
+  for(byte i = 0; i < 62; i++){
+    if(isTaken(i)){
+      found = true;
+      Serial.print("First address found:  ");
+      Serial.println(decToChar(i));
+      Serial.print("Total number of sensors found:  ");
+      Serial.println(numSensors);
+      break;
+    }
+  }
+
+  if(!found) {
+    Serial.println("No sensors found, please check connections and restart the Arduino.");
+    while(true);
+  } // stop here
+
+  Serial.println();
+  Serial.println("Time Elapsed (s), Sensor Address and ID, Measurement 1, Measurement 2, ... etc.");
+  Serial.println("-------------------------------------------------------------------------------");
+
+// LMIC init
     os_init();
     // Reset the MAC state. Session and pending data transfers will be discarded.
     LMIC_reset();
@@ -506,10 +557,45 @@ void setup() {
     LMIC_setDrTxpow(DR_SF7,14);
     LMIC_selectSubBand(1);
 
-    // Start job (sending automatically starts OTAA too)
+     // Start job (sending automatically starts OTAA too)
     do_send(&sendjob);
+    
 }
 
-void loop() {
-    os_runloop_once();
+void loop(){
+
+/*
+  // scan address space 0-9
+  for(char i = '0'; i <= '9'; i++) if(isTaken(i)){
+    Serial.print(millis()/1000);
+    Serial.print(",\t");
+    printInfo(i);
+    Serial.print(",\t");
+    takeMeasurement(i);
+    Serial.println();
+  }
+
+  // scan address space a-z
+  for(char i = 'a'; i <= 'z'; i++) if(isTaken(i)){
+    Serial.print(millis()/1000);
+    Serial.print(",\t");
+    printInfo(i);
+    Serial.print(",\t");
+    takeMeasurement(i);
+    Serial.println();
+  }
+
+  // scan address space A-Z
+  for(char i = 'A'; i <= 'Z'; i++) if(isTaken(i)){
+    Serial.print(millis()/1000);
+    Serial.print(",\t");
+    printInfo(i);
+    Serial.print(",\t");
+    takeMeasurement(i);
+    Serial.println();
+  };
+*/
+  os_runloop_once();
+  delay(10000); // wait ten seconds between measurement attempts.
+
 }

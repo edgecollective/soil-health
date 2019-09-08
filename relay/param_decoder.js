@@ -15,11 +15,14 @@ const base_url='https://edgecollective.farmos.net/farm/sensor/listener/'
 const public_key='6c2444d2b061c2492f45eaef279b6b38'
 const private_key='f0f0b85f4c4eae53ab126e97c2120a08' 
 
-const num_params=5
+
 const decoder_divider = 500
 
-var paramList = ['Volumetric Water Content (%)','Soil Temp (C)','Soil Permittivity','Soil Bulk EC (uS/cm)','Soil Pore Water EC (uS/cm)']
+var paramList = ['Volumetric Water Content (%)','Soil Temp (C)','Soil Permittivity','Soil Bulk EC (uS/cm)','Soil Pore Water EC (uS/cm)', 'Battery Voltage (V)']
 
+const num_params=paramList.length
+
+console.log("length=",num_params)
 //var paramList = ['a','b','c','d','e']
 
 //https://learn.adafruit.com/the-things-network-for-feather/payload-decoding

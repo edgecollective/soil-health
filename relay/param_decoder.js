@@ -12,8 +12,8 @@ app.use(bodyParser.json())
 
 const base_url='https://edgecollective.farmos.net/farm/sensor/listener/'
 
-const public_key='1b023b2118f5b0382b9e16301d021c9f'
-const private_key='b6992e66dd09e6e3f58156bca52852e7'
+const public_key='7983c6f8b6152fb9bea2bd33ce16e330' 
+const private_key='9b13451367abbb2874cb5c0b7d8b0857'
 
 
 const decoder_divider = 500

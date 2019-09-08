@@ -56,6 +56,10 @@ boolean flip = 1;
 
 // https://acclima.com/prodlit/TDR%20User%20Manual.pdf
 
+
+const unsigned TX_INTERVAL = 90;
+
+
 #define num_params 6 // 5 from soil moisture, 6th is battery voltage
 
 float params[num_params]; // acclima params
@@ -296,7 +300,7 @@ static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
 // cycle limitations).
-const unsigned TX_INTERVAL = 10;
+//const unsigned TX_INTERVAL = 10;
 
 // need to connect pin 12 to i01 on Feather M0
 // Pin mapping for Adafruit Feather M0 LoRa, etc.

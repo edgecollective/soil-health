@@ -121,9 +121,9 @@ app.post("/", function(req,response){
 
     var mybytes = new Buffer(hex)
     var myobject = Decoder(mybytes,num_params)
-    var myjson = JSON.stringify(myobject)
+    //var myjson = JSON.stringify(myobject)
 
-    console.log(myjson)
+    console.log(myobject)
 	//var myvar = String('hello');
 
 	//console.log(myvar);
@@ -131,7 +131,7 @@ app.post("/", function(req,response){
 	request.post(
     post_url,
     //{ json: { 'temp': 23.,'moisture':32. } },
-    { json: myjson },  
+    { json: myobject },  
     function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(body);

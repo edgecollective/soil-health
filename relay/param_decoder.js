@@ -43,7 +43,10 @@ function Decoder(bytes,num_params) {
 
     //decoded.keyname = sflt162f(rawValue) * 500;
     //decoded[keyname] = sflt162f(rawValue) * 500;
-    decoded[paramList[i].toString()] = (sflt162f(rawValue) * 500).toFixed(2);
+    thisnum = sflt162f(rawValue) * 500;
+    thisnum_rounded = Math.round(thisnum * 1e2)/1e2;
+
+    decoded[paramList[i].toString()] = thisnum_rounded
     
     
 }

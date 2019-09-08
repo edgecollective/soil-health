@@ -18,7 +18,7 @@ const private_key='8f9a953aa492cc0864a92f2651f530af'
 const num_params=5
 const decoder_divider = 500
 
-var paramList = ["VWV","TTT","PPP","EEEE","CCCC"]
+var paramList = ['VWV','TTT','PPP','EEEE','CCCC']
 
 //var paramList = ['a','b','c','d','e']
 
@@ -46,7 +46,7 @@ function Decoder(bytes,num_params) {
     thisnum = sflt162f(rawValue) * 500;
     thisnum_rounded = Math.round(thisnum * 1e2)/1e2;
 
-    decoded[paramList[i].toString()] = thisnum_rounded
+    decoded[paramList[i]] = thisnum_rounded
     
     
 }

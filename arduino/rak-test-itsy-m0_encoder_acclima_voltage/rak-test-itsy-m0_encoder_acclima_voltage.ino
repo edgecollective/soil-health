@@ -453,11 +453,11 @@ char i = '0';
         static uint8_t payload[2*num_params];
         
         for (int pi=0;pi<num_params;pi++) {
-        Serial.print("pi=");
-        Serial.println(pi);
-        Serial.println(params[pi]);
+        //Serial.print("pi=");
+        //Serial.println(pi);
+        //Serial.println(params[pi]);
         int pj=pi*2;
-        Serial.println(pj);
+        //Serial.println(pj);
         
         float p = params[pi] / decoder_divider;
         uint16_t paramPayload = LMIC_f2sflt16(p);
@@ -467,7 +467,8 @@ char i = '0';
         payload[pj]=p_low;
         payload[pj+1]=p_high;
         }
-      
+
+        Serial.print("Size of payload = ");
         Serial.println(sizeof(payload));
         
         //LMIC_setTxData2(1, message.getBytes(), sizeof(message.getBytes()), 0);

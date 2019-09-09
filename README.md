@@ -23,12 +23,12 @@ https://github.com/EnviroDIY/Arduino-SDI-12
 
 ## References
 
-## LoRa Serialization library
+### LoRa Serialization library
 
 (Not currently used, but contains useful reference methods)
 https://github.com/thesolarnomad/lora-serialization/blob/master/examples/main_encoder_LoraMessage.ino
 
-## Hyperssh
+### Hyperssh
 
 https://github.com/mafintosh/hyperssh
 

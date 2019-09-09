@@ -38,7 +38,7 @@
 #include <hal/hal.h>
 #include <SPI.h>
 //#include <LoraEncoder.h>
-#include <LoraMessage.h>
+//#include <LoraMessage.h>
 
 #define decoder_divider 500
 
@@ -57,7 +57,7 @@ boolean flip = 1;
 // https://acclima.com/prodlit/TDR%20User%20Manual.pdf
 
 
-const unsigned TX_INTERVAL = 90;
+const unsigned TX_INTERVAL = 300;
 
 
 #define num_params 6 // 5 from soil moisture, 6th is battery voltage
@@ -435,8 +435,23 @@ void do_send(osjob_t* j){
 // SDI-12 stuff
 
 char i = '0';
+
+for (int k=0;k<2;k++) {
+    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1000);                       // wait for a second
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(1000);                       // wait for a second
+}
+
      printInfo(i);
      takeMeasurement(i);
+for (int k=0;k<3;k++) {
+    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(100);                       // wait for a second
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(100);                       // wait for a second
+}
+    
     for (int p=0;p<num_params;p++) {
       Serial.print("param ");
       Serial.print(p);
@@ -488,6 +503,7 @@ void setup() {
 
    mySDI12.begin();
   pinMode(LED_BUILTIN, OUTPUT);
+  
     delay(5000);
     //while (! Serial)
     //    ;
@@ -512,6 +528,11 @@ void setup() {
     LMIC_setDrTxpow(DR_SF7,14);
     LMIC_selectSubBand(1);
 
+
+  
+        Serial.println(F("Packet queued"));
+        
+        
     // Start job (sending automatically starts OTAA too)
     do_send(&sendjob);
 }

@@ -2,6 +2,8 @@
 
 ## Summary
 
+<img src="assets/rak_router.JPG">
+
 <img src="assets/gateway.png">
 
 <img src="assets/garden_test.JPG">

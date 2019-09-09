@@ -1,7 +1,8 @@
 # Update #1
 
-<img src="assets/garden_test.png">
-<img src="assets/potted_test.png">
+<img src="assets/gateway.png">
+<img src="assets/garden_test.JPG">
+<img src="assets/potted_test.JPG">
 <img src="assets/probe_removal_replace_readjust.png">
 
 
@@ -22,7 +23,16 @@ Software set up on gateway to parse incoming lora packets and send to FarmOS, wi
 
 ## Next steps:
 
-- Build remote node hardware setup for initial deployment
+### Build remote node hardware setup for initial deployment
 - Enclosure
 - Battery
-- Finalize initial version of gateway software
+
+### Finalize initial version of gateway software
+- Pull out wifi params into separate file
+- Display IP address locally (on i2c display)
+
+### Materials
+
+- Acquire another gateway so can develop in parallel
+
+

@@ -16,7 +16,7 @@ const public_key='7983c6f8b6152fb9bea2bd33ce16e330'
 const private_key='9b13451367abbb2874cb5c0b7d8b0857'
 
 
-const decoder_divider = 1000
+const decoder_divider = 2000
 
 var paramList = ['Volumetric Water Content (%)','Soil Temp (C)','Soil Permittivity','Soil Bulk EC (uS/cm)','Soil Pore Water EC (uS/cm)', 'Battery Voltage (V)']
 
@@ -46,7 +46,7 @@ function Decoder(bytes,num_params) {
 
     //decoded.keyname = sflt162f(rawValue) * 500;
     //decoded[keyname] = sflt162f(rawValue) * 500;
-    thisnum = sflt162f(rawValue) * 500;
+    thisnum = sflt162f(rawValue) * decoder_divider;
     thisnum_rounded = Math.round(thisnum * 1e2)/1e2;
 
     decoded[paramList[i]] = thisnum_rounded

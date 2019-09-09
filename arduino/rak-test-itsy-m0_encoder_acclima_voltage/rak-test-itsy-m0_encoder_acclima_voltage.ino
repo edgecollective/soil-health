@@ -32,15 +32,13 @@
  *
  *******************************************************************************/
 #define VBATPIN A7
-#define decoder_divider 500
-
 #include <lmic.h>
 #include <hal/hal.h>
 #include <SPI.h>
 //#include <LoraEncoder.h>
 //#include <LoraMessage.h>
 
-#define decoder_divider 1000
+#define decoder_divider 2000
 
 #include <SDI12.h>
 

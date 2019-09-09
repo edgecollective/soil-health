@@ -1,6 +1,9 @@
 # Update #1
 
+<img src="assets/garden_test.png">
+<img src="assets/potted_test.png">
 <img src="assets/probe_removal_replace_readjust.png">
+
 
 **Figure 1**:  Probe initially in potted plant soil.  Removed probe for a few minutes (got “zero” readings for the soil moisture parameters, as expected), then replaced in soil.  Note that initial readings are “zero” for soil moisture parameters -- likely because potted plant soil was so dry and porous.  After readjusting the probe in the soil, readings returned to approximately their previous values. 
 

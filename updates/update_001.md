@@ -15,6 +15,8 @@
 
 <img src="assets/vol_water_content.png">
 
+<img src="assets/pulse_test_two.png">
+
 ## Remote Node
 
 - Combined LoRa code with SDI-12 code

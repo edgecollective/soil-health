@@ -40,7 +40,7 @@
 //#include <LoraEncoder.h>
 //#include <LoraMessage.h>
 
-#define decoder_divider 500
+#define decoder_divider 1000
 
 #include <SDI12.h>
 

@@ -1,5 +1,9 @@
 # Update #1
 
+## Summary
+
+<img src="assets/rak_router.JPG">
+
 <img src="assets/gateway.png">
 
 <img src="assets/garden_test.JPG">
@@ -10,6 +14,9 @@
 **Figure 1**:  Probe initially in potted plant soil.  Removed probe for a few minutes (got “zero” readings for the soil moisture parameters, as expected), then replaced in soil.  Note that initial readings are “zero” for soil moisture parameters -- likely because potted plant soil was so dry and porous.  After readjusting the probe in the soil, readings returned to approximately their previous values. 
 
 <img src="assets/vol_water_content.png">
+
+<img src="assets/pulse_test_two.png">
+<img src="assets/pulse_test_three.png">
 
 ## Remote Node
 

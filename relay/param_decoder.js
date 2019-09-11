@@ -16,7 +16,7 @@ const public_key='e021ddc291fd13a78770b029cbb4d312'
 const private_key='8d3487c7e82269eddaf8162a938e7901'
 
 
-const decoder_divider = 5000
+const decoder_divider = 10000
 
 var paramList = ['Volumetric Water Content (%)','Soil Temp (C)','Soil Permittivity','Soil Bulk EC (uS/cm)','Soil Pore Water EC (uS/cm)', 'Battery Voltage (V)']
 

@@ -48,8 +48,10 @@ You should be presented with a page asking for username and password.
 
 ```password: admin```
 
-Here's a video of logging into the Gateway and checking for incoming data: [video](
-https://youtu.be/IIaKVIXJb1M)
+Here's a [video](
+https://youtu.be/IIaKVIXJb1M) of logging into the Gateway and checking for incoming data: 
+
+<a href="https://youtu.be/IIaKVIXJb1M"><img src="assets/gateway_video.png" width=300></a>
 
 Alternatively, you can see some screenshots of the sequence below:
 
@@ -78,9 +80,10 @@ Alternatively, you can see some screenshots of the sequence below:
 <img src="assets/remote_on.JPG" width=300>
 
 Video of a successful power-up and shut-down is [here](
-https://photos.app.goo.gl/qXKK1zMYpoje4MXd6). Below is an explanation of the various elements of the power-up and shut-down sequence.
+https://photos.app.goo.gl/qXKK1zMYpoje4MXd6). 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/IIaKVIXJb1M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+Below is an explanation of the various elements of the power-up and shut-down sequence.
 
 
 ### Successful sequence:

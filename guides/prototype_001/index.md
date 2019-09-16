@@ -63,6 +63,14 @@ https://youtu.be/IIaKVIXJb1M) of logging into the Gateway and checking for incom
 
 <img src="assets/wiring.JPG" width=300>
 
+The Acclima sensor is connected at the top of the board via a screw terminal labeled "R B W" (for "Red wire", "Blue wire", "White wire"):
+
+<img src="assets/acclima_wiring.png">
+
+The battery (you can use any battery from 6.5 Volts to 12 Volts) is wired on the port labeled "+ -":
+
+<img src="assets/battery_wiring.png">
+
 ## Timer Configuration via Resistor
 
 The amount of time the remote node spends during its sleep cycle is controlled by the value of a "timing resistor" on the board, which can be replaced by hand:

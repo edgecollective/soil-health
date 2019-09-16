@@ -65,6 +65,12 @@ https://youtu.be/IIaKVIXJb1M) of logging into the Gateway and checking for incom
 
 ## Timer Configuration via Resistor
 
+The amount of time the remote node spends during its sleep cycle is controlled by the value of a "timing resistor" on the board, which can be replaced by hand:
+
+<img src="assets/timing_resistor.png">
+
+A few resistors have been included in the kit with some typical timing values:
+
 <img src="assets/timer_resistor.JPG" width=300>
 
 ## Remote Node Measurement Cycle

@@ -80,6 +80,9 @@ Alternatively, you can see some screenshots of the sequence below:
 Video of a successful power-up and shut-down is [here](
 https://photos.app.goo.gl/qXKK1zMYpoje4MXd6). Below is an explanation of the various elements of the power-up and shut-down sequence.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IIaKVIXJb1M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 ### Successful sequence:
 
 1. **Powerup**. Timer chip LED (green) is on.  Feather led (red) is on for a few seconds.

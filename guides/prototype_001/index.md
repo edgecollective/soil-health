@@ -67,22 +67,19 @@ Now navigate to "TODO"
 Video of a successful power-up and shut-down is [here](
 https://photos.app.goo.gl/qXKK1zMYpoje4MXd6). Below is an explanation of the various elements of the power-up and shut-down sequence.
 
+### Successful sequence:
 
-### Remote Node Bootup
+1. **Powerup**. Timer chip LED (green) is on.  Feather led (red) is on for a few seconds.
 
-Immediately after turning the power 'on', you'll see a green light on the timer chip.  This will stay on while the remote node is making measurements and transmitting dta.
+2. **Feather bootup**. Feather LED (red) blinks **once**, slowly.
 
-Simultaneously, you'll also notice that the red power light on the Feather will turn on, and stay on steadily for several seconds, indicating successful bootup.
+3. **Soil moisture measurement**.  Feather LED (red) blinks **three times** if the Acclima soil moisture sensors are successfully read.
 
-### Soil Moisture Measurement
+4. **Gateway acknowleges transmission, and Remote sleeps**.  The Feather now sends data to the Gateway.  If it receives a message from the Gateway indicating success, then the timer chip LED (green) will turn off, indicating that the remote node is now sleeping.
 
-The Feather will then attempt to measure the soil moisture sensor.  If it is successful, the red light will blink three times, quickly. 
+### Troubleshooting
 
-### Acknowledgement from Gateway, and Shutdown
-
-Once the soil moisture measurement is made, the Feather will attempt to transmit data to the Gateway. If the Feather receives an acknowledgement that data has been received by the Gateway, it will then turn itself off -- so you'll see the green light on the timer chip turn off.
-
-If the Gateway is out of range, or is not functioning properly, the green light will remain on.  It will flicker quickly once the timer 'resets' at the interval specified by the resistor connected to it.
+- **Timer LED (green) does not turn off**. If all other Feather LED (red) patterns seem successful, but the Timer LED (green) does not turn off, this means that the Remote Node has not been able to send data to the Gateway.  This could be because the Gateway is out of range, or because the Gateway is malfunctioning.  
 
 # Checking for Successful Data Flow
 

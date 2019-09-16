@@ -48,7 +48,8 @@ You should be presented with a page asking for username and password.
 
 ```password: admin```
 
-Now navigate to "TODO"
+<img src="assets/gateway_login.png">
+
 
 # Remote Node Setup
 
@@ -84,6 +85,14 @@ https://photos.app.goo.gl/qXKK1zMYpoje4MXd6). Below is an explanation of the var
 # Checking for Successful Data Flow
 
 ## On the Gateway
+
+<img src="assets/gateway_applications.png">
+
+<img src="assets/gateway_applications_app.png">
+
+<img src="assets/gateway_applications_app_devices.png">
+
+<img src="assets/gateway_applications_app_devices_data.png">
 
 ## On FarmOS
 

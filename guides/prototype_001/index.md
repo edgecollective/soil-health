@@ -96,10 +96,17 @@ Below is an explanation of the various elements of the power-up and shut-down se
 
 ## On the Gateway
 
+This is just a matter of waiting for data to flow through on the final web page that one navigated to in the above section on setting up the gateway.  It corresponds to the end point of the above video -- also linked (at the appropriate timestamp) [here](https://youtu.be/IIaKVIXJb1M?t=51):
+
+<a href="https://youtu.be/IIaKVIXJb1M?t=51"><img src="assets/gateway_waiting.png"></a>
 
 ## On FarmOS
 
-(Note about battery level)
+You can check the sensor data on FarmOS by using your login and password at edgecollective.farmos.net -- the below [video](https://youtu.be/Amo0gwSLSl8) shows you how:
+
+<a href="https://youtu.be/Amo0gwSLSl8"><img src="assets/farmos.png"></a>
+
+(TODO: Note about battery level)
 
 # Testing Remote Login to Gateway
 

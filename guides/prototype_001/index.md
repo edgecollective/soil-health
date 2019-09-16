@@ -53,18 +53,6 @@ https://youtu.be/IIaKVIXJb1M) of logging into the Gateway and checking for incom
 
 <a href="https://youtu.be/IIaKVIXJb1M"><img src="assets/gateway_video.png" width=300></a>
 
-Alternatively, you can see some screenshots of the sequence below:
-
-<img src="assets/gateway_login.png">
-
-<img src="assets/gateway_applications.png">
-
-<img src="assets/gateway_applications_app.png">
-
-<img src="assets/gateway_applications_app_devices.png">
-
-<img src="assets/gateway_applications_app_devices_data.png">
-
 # Remote Node Setup
 
 ## Wiring

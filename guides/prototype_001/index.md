@@ -105,6 +105,18 @@ Below is an explanation of the various elements of the power-up and shut-down se
 
 # Remote Node Enclosures
 
+I've been using various sizes of PVC electrical junction boxes at Home Depot, and drilling necessary holes in them:
+
+<a href="https://www.homedepot.com/p/Carlon-6-in-x-6-in-x-4-in-Gray-PVC-Junction-Box-Case-of-3-E987RR/202206112?MERCH=REC-_-pipsem-_-NA-_-202206112-_-N"><img src="assets/junction.jpg" width=300></a>
+
+One can then use plastic cable 'glands' to make cable 'pass-throughs' that are water-resistant:
+
+<a href="https://www.amazon.com/gp/product/B06Y5HGYK2/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1"><img src="assets/glands.png" width=300></a>
+
+Here's an example of such an enclosure with two cable glands for sensor cables, and one for a solar panel:
+
+<img src="assets/enclosure.png">
+
 # References
 
 - Gateway docs

@@ -36,7 +36,7 @@ Using the switch on the power cord.
 
 Once the Gateway has been powered up for about 30-60 seconds, it should connect to the wifi network, and it should receive an IP address from your wifi router automatically.  We'll need this IP address in order to access the gateway configuration and look at incoming data. 
 
-Finding the gateway's IP address is perhaps easiest using the 'Fing' smartphone app, which scans your local wifi network and gives you IP addressses of devices connected to your router.
+Finding the gateway's IP address is perhaps easiest using the ['Fing' smartphone app](https://www.fing.com/products/fing-app), which scans your local wifi network and gives you IP addressses of devices connected to your router.
 
 Fing is available for [Android](https://play.google.com/store/apps/details?id=com.overlook.android.fing&hl=en_US) and [iPhone](https://apps.apple.com/us/app/fing-network-scanner/id430921107).  A brief guide to using it is [here](https://lifehacker.com/ios-android-app-of-the-week-fing-network-scanner-1825205516).
 

@@ -20,9 +20,11 @@ network={
 ```
 Now you can insert the microSD card into the Gateway.
 
-Here's a [video](https://www.youtube.com/watch?v=ZCZ4yxSHUO0) describing these steps.
+Here's a [video](https://www.youtube.com/watch?v=ZCZ4yxSHUO0) describing these steps:
 
-## Inserting the MicroSD card for the Gateway
+<a href="https://www.youtube.com/watch?v=ZCZ4yxSHUO0"><img src="assets/microsd_setup.png"></a>
+
+## Inserting the MicroSD card into the Gateway
 
 https://photos.app.goo.gl/qJAYhq7QZsEPrEFv9
 

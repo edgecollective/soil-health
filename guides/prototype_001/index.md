@@ -20,6 +20,8 @@ network={
 ```
 Now you can insert the microSD card into the Gateway.
 
+> **Note**: once the Gateway powers up, it copies the contents of ```wpa_supplicant.conf``` to an internal configuration file, and erases it from the /boot directory. (So don't be alarmed if the the ```wpa_supplicant.conf``` file is missing from ```/boot``` if you check after powering up). If you need to change the wifi configuration again (due to error, or change in wifi credentials), you'll need to create a new wpa_supplicant.conf file in ```/boot```.  
+
 Here's a [video](https://www.youtube.com/watch?v=ZCZ4yxSHUO0) describing these steps:
 
 <a href="https://www.youtube.com/watch?v=ZCZ4yxSHUO0"><img src="assets/microsd_setup.png"></a>

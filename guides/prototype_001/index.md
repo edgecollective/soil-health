@@ -81,6 +81,8 @@ The amount of time the remote node spends during its sleep cycle is controlled b
 
 A few resistors have been included in the kit with some typical timing values:
 
+<img src="assets/6_min_resistor.png">
+
 <img src="assets/timer_resistor.JPG" width=300>
 
 ## Remote Node Measurement Cycle

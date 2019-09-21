@@ -22,11 +22,11 @@ const public_key='e021ddc291fd13a78770b029cbb4d312'
 const private_key='8d3487c7e82269eddaf8162a938e7901'
 
 
-const decoder_divider = 10000
+const decoder_divider = 6000
 
 var paramList = ['Volumetric Water Content (%)','Soil Temp (C)','Soil Permittivity','Soil Bulk EC (uS/cm)','Soil Pore Water EC (uS/cm)', 'Battery Voltage (V)']
 
-var sheetParams = ['vol_water','temp','permit','bulk','pore','battery']
+var sheetParams = ["vol_water","temp","permit","bulk","pore","battery"]
 
 const num_params=paramList.length
 
@@ -151,45 +151,10 @@ mybytes = Buffer([0x7f,0x6d,0xd0,0x5d,0x1d,0x6c,0x48,0x75,0xa0,0x76])
 
 /// Test code
 
-var result = Decoder(mybytes,num_params)
-console.log("Happy",result)
-console.log(Date.now())
-
 //var theDate = new Date(Date.now() * 1000);
 //dateString = theDate.toGMTString();
 //console.log(dateString)
 //console.log(result)
-
-var newDate = new Date();
-var datetime = newDate.today() + " " + newDate.timeNow();
-console.log(datetime)
-
-
-var sheet_object = Sheet_Decoder(mybytes,num_params)
-//var sheet_object = {};
-sheet_object['timestamp']=datetime;
-
-console.log(sheet_object)
-
-
-doc.useServiceAccountAuth(creds, function (err) {
-
-    // Get all of the rows from the spreadsheet.
-    //doc.getRows(1, function (err, rows) {
-     // console.log(rows);
-    //});
-  
-    doc.addRow(1, sheet_object, function(err) {
-      if(err) {
-        console.log(err);
-      }
-      else {
-          console.log("post to sheets worked.");
-      }
-    });
-  
-  });
-
 
 
 app.post("/", function(req,response){
@@ -216,7 +181,11 @@ app.post("/", function(req,response){
    
     // post to Google Sheets
     var sheet_object = Sheet_Decoder(mybytes,num_params)
-    sheet_object['timestamp']=datetime;
+
+    var d = new Date();
+    var datetime = d.today() + " " + d.timeNow();
+   
+    sheet_object["timestamp"]=datetime;
     console.log(sheet_object)
 
     doc.useServiceAccountAuth(creds, function (err) {

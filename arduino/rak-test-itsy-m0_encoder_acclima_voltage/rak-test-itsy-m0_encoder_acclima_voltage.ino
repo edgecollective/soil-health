@@ -38,7 +38,7 @@
 //#include <LoraEncoder.h>
 //#include <LoraMessage.h>
 
-#define decoder_divider 5000
+#define decoder_divider 6000
 
 #include <SDI12.h>
 
@@ -55,7 +55,7 @@ boolean flip = 1;
 // https://acclima.com/prodlit/TDR%20User%20Manual.pdf
 
 
-const unsigned TX_INTERVAL = 300;
+const unsigned TX_INTERVAL = 60;
 
 
 #define num_params 6 // 5 from soil moisture, 6th is battery voltage
@@ -389,6 +389,15 @@ void onEvent (ev_t ev) {
             }
             // Schedule next transmission
             os_setTimedCallback(&sendjob, os_getTime()+sec2osticks(TX_INTERVAL), do_send);
+
+            // pull Done switch
+for (int k=0;k<4;k++) {
+    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(100);                       // wait for a second
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(100);                       // wait for a second
+}
+            
             break;
         case EV_LOST_TSYNC:
             Serial.println(F("EV_LOST_TSYNC"));
@@ -443,12 +452,7 @@ for (int k=0;k<2;k++) {
 
      printInfo(i);
      takeMeasurement(i);
-for (int k=0;k<3;k++) {
-    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(100);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);                       // wait for a second
-}
+
     
     for (int p=0;p<num_params;p++) {
       Serial.print("param ");
@@ -488,10 +492,7 @@ for (int k=0;k<3;k++) {
         LMIC_setTxData2(1, payload,sizeof(payload), 0);
 
         //delete message;
-        digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(100);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(100);                       // wait for a second
+        
         Serial.println(F("Packet queued"));
     }
     // Next TX is scheduled after TX_COMPLETE event.

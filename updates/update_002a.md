@@ -70,5 +70,7 @@ He was easily able to transmit his GPS location from Prospect Tower to his home 
 
 The 'RSSI' (a measure of signal strength) was about -120 dB (not the best, but not the worst.  And this is with a simple wire antenna on the remote node, and many houses and trees in between the remote node and the gateway).  
 
+Next week, Don will add the more robust antenna to the remote node, and see if he can find a test location that allows for a longer range of line-of-sight connection.
+
 
 

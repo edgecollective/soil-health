@@ -118,10 +118,10 @@ D1
 Text GLabel 7350 4600 0    50   Input ~ 0
 DI01
 $Comp
-L knuth-gateway-rescue:R-Device R1
+L knuth-gateway-rescue:R-Device R2
 U 1 1 5E5EA6D5
 P 3350 4600
-F 0 "R1" H 3420 4646 50  0000 L CNN
+F 0 "R2" H 3420 4646 50  0000 L CNN
 F 1 "1K" H 3420 4555 50  0000 L CNN
 F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" V 3280 4600 50  0001 C CNN
 F 3 "~" H 3350 4600 50  0001 C CNN
@@ -310,10 +310,10 @@ F 3 "" H 2000 4950 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L knuth-gateway-rescue:R-Device R2
+L knuth-gateway-rescue:R-Device R1
 U 1 1 5E667905
 P 2750 4600
-F 0 "R2" H 2820 4646 50  0000 L CNN
+F 0 "R1" H 2820 4646 50  0000 L CNN
 F 1 "1K" H 2820 4555 50  0000 L CNN
 F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" V 2680 4600 50  0001 C CNN
 F 3 "~" H 2750 4600 50  0001 C CNN
@@ -502,4 +502,26 @@ Connection ~ 3350 5050
 Wire Wire Line
 	2750 5050 2400 5050
 Connection ~ 2750 5050
+$Comp
+L Mechanical:MountingHole H1
+U 1 1 5E641806
+P 2950 950
+F 0 "H1" H 3050 996 50  0000 L CNN
+F 1 "MountingHole" H 3050 905 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 2950 950 50  0001 C CNN
+F 3 "~" H 2950 950 50  0001 C CNN
+	1    2950 950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H2
+U 1 1 5E641C08
+P 2950 1300
+F 0 "H2" H 3050 1346 50  0000 L CNN
+F 1 "MountingHole" H 3050 1255 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.7mm_M2.5" H 2950 1300 50  0001 C CNN
+F 3 "~" H 2950 1300 50  0001 C CNN
+	1    2950 1300
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

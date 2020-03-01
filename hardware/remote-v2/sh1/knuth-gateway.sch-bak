@@ -118,17 +118,6 @@ D1
 Text GLabel 7350 4600 0    50   Input ~ 0
 DI01
 $Comp
-L knuth-gateway-rescue:GND-power #PWR0102
-U 1 1 5E5EAD48
-P 3350 5050
-F 0 "#PWR0102" H 3350 4800 50  0001 C CNN
-F 1 "GND" H 3355 4877 50  0000 C CNN
-F 2 "" H 3350 5050 50  0001 C CNN
-F 3 "" H 3350 5050 50  0001 C CNN
-	1    3350 5050
-	1    0    0    -1  
-$EndComp
-$Comp
 L knuth-gateway-rescue:R-Device R1
 U 1 1 5E5EA6D5
 P 3350 4600
@@ -181,50 +170,6 @@ F 1 "1K" H 5470 4555 50  0000 L CNN
 F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" V 5330 4600 50  0001 C CNN
 F 3 "~" H 5400 4600 50  0001 C CNN
 	1    5400 4600
-	1    0    0    -1  
-$EndComp
-$Comp
-L knuth-gateway-rescue:GND-power #PWR0104
-U 1 1 5E5EFBCC
-P 3850 5050
-F 0 "#PWR0104" H 3850 4800 50  0001 C CNN
-F 1 "GND" H 3855 4877 50  0000 C CNN
-F 2 "" H 3850 5050 50  0001 C CNN
-F 3 "" H 3850 5050 50  0001 C CNN
-	1    3850 5050
-	1    0    0    -1  
-$EndComp
-$Comp
-L knuth-gateway-rescue:GND-power #PWR0106
-U 1 1 5E5EFF0F
-P 4400 5050
-F 0 "#PWR0106" H 4400 4800 50  0001 C CNN
-F 1 "GND" H 4405 4877 50  0000 C CNN
-F 2 "" H 4400 5050 50  0001 C CNN
-F 3 "" H 4400 5050 50  0001 C CNN
-	1    4400 5050
-	1    0    0    -1  
-$EndComp
-$Comp
-L knuth-gateway-rescue:GND-power #PWR0107
-U 1 1 5E5F021D
-P 4900 5050
-F 0 "#PWR0107" H 4900 4800 50  0001 C CNN
-F 1 "GND" H 4905 4877 50  0000 C CNN
-F 2 "" H 4900 5050 50  0001 C CNN
-F 3 "" H 4900 5050 50  0001 C CNN
-	1    4900 5050
-	1    0    0    -1  
-$EndComp
-$Comp
-L knuth-gateway-rescue:GND-power #PWR0108
-U 1 1 5E5F1D45
-P 5400 5050
-F 0 "#PWR0108" H 5400 4800 50  0001 C CNN
-F 1 "GND" H 5405 4877 50  0000 C CNN
-F 2 "" H 5400 5050 50  0001 C CNN
-F 3 "" H 5400 5050 50  0001 C CNN
-	1    5400 5050
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -356,12 +301,12 @@ Wire Wire Line
 $Comp
 L knuth-gateway-rescue:GND-power #PWR0110
 U 1 1 5E6678FF
-P 2750 5050
-F 0 "#PWR0110" H 2750 4800 50  0001 C CNN
-F 1 "GND" H 2755 4877 50  0000 C CNN
-F 2 "" H 2750 5050 50  0001 C CNN
-F 3 "" H 2750 5050 50  0001 C CNN
-	1    2750 5050
+P 2000 4950
+F 0 "#PWR0110" H 2000 4700 50  0001 C CNN
+F 1 "GND" H 2005 4777 50  0000 C CNN
+F 2 "" H 2000 4950 50  0001 C CNN
+F 3 "" H 2000 4950 50  0001 C CNN
+	1    2000 4950
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -484,10 +429,10 @@ F 3 "~" V 6800 1960 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Switch:SW_SPDT SW?
+L Switch:SW_SPDT SW2
 U 1 1 5E5EFB24
 P 8050 1650
-F 0 "SW?" H 8050 1935 50  0000 C CNN
+F 0 "SW2" H 8050 1935 50  0000 C CNN
 F 1 "SW_SPDT" H 8050 1844 50  0000 C CNN
 F 2 "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical" H 8050 1650 50  0001 C CNN
 F 3 "~" H 8050 1650 50  0001 C CNN
@@ -497,10 +442,10 @@ $EndComp
 Text GLabel 7850 1650 0    50   Input ~ 0
 A1
 $Comp
-L knuth-gateway-rescue:R-Device RE?
+L knuth-gateway-rescue:R-Device RE3
 U 1 1 5E5FA61D
 P 8250 1900
-F 0 "RE?" H 8320 1946 50  0000 L CNN
+F 0 "RE3" H 8320 1946 50  0000 L CNN
 F 1 "100K" H 8320 1855 50  0000 L CNN
 F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" V 8180 1900 50  0001 C CNN
 F 3 "~" H 8250 1900 50  0001 C CNN
@@ -508,10 +453,10 @@ F 3 "~" H 8250 1900 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L knuth-gateway-rescue:GND-power #PWR?
+L knuth-gateway-rescue:GND-power #PWR0113
 U 1 1 5E5FB986
 P 8250 2050
-F 0 "#PWR?" H 8250 1800 50  0001 C CNN
+F 0 "#PWR0113" H 8250 1800 50  0001 C CNN
 F 1 "GND" H 8255 1877 50  0000 C CNN
 F 2 "" H 8250 2050 50  0001 C CNN
 F 3 "" H 8250 2050 50  0001 C CNN
@@ -519,14 +464,42 @@ F 3 "" H 8250 2050 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L knuth-gateway-rescue:+3V3-power #PWR?
+L knuth-gateway-rescue:+3V3-power #PWR0114
 U 1 1 5E5FDE6D
 P 8250 1550
-F 0 "#PWR?" H 8250 1400 50  0001 C CNN
+F 0 "#PWR0114" H 8250 1400 50  0001 C CNN
 F 1 "+3V3" H 8265 1723 50  0000 C CNN
 F 2 "" H 8250 1550 50  0001 C CNN
 F 3 "" H 8250 1550 50  0001 C CNN
 	1    8250 1550
 	1    0    0    -1  
 $EndComp
+$Comp
+L Switch:SW_SPDT SW?
+U 1 1 5E61DD21
+P 2200 4950
+F 0 "SW?" H 2200 5235 50  0000 C CNN
+F 1 "SW_SPDT" H 2200 5144 50  0000 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x03_P2.54mm_Vertical" H 2200 4950 50  0001 C CNN
+F 3 "~" H 2200 4950 50  0001 C CNN
+	1    2200 4950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5400 5050 4900 5050
+Wire Wire Line
+	4400 5050 4900 5050
+Connection ~ 4900 5050
+Wire Wire Line
+	4400 5050 3850 5050
+Connection ~ 4400 5050
+Wire Wire Line
+	3850 5050 3350 5050
+Connection ~ 3850 5050
+Wire Wire Line
+	3350 5050 2750 5050
+Connection ~ 3350 5050
+Wire Wire Line
+	2750 5050 2400 5050
+Connection ~ 2750 5050
 $EndSCHEMATC

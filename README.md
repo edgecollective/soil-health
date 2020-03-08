@@ -32,3 +32,6 @@ https://github.com/thesolarnomad/lora-serialization/blob/master/examples/main_en
 
 https://github.com/mafintosh/hyperssh
 
+### running different bands on loraserver.io
+
+https://forum.chirpstack.io/t/multiple-bands-on-the-same-server/2808/2

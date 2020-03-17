@@ -1,5 +1,6 @@
 EESchema Schematic File Version 4
-EELAYER 30 0
+LIBS:knuth-gateway-cache
+EELAYER 29 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -280,11 +281,6 @@ Wire Wire Line
 Wire Wire Line
 	5400 4000 5400 4450
 Wire Wire Line
-	6200 3900 4900 3900
-Wire Wire Line
-	4900 3900 4900 4450
-Connection ~ 6200 3900
-Wire Wire Line
 	6200 3800 4400 3800
 Wire Wire Line
 	4400 3800 4400 4450
@@ -442,10 +438,10 @@ $EndComp
 Text GLabel 7850 1650 0    50   Input ~ 0
 A1
 $Comp
-L knuth-gateway-rescue:R-Device RSW
+L knuth-gateway-rescue:R-Device RSW1
 U 1 1 5E5FA61D
 P 8250 1400
-F 0 "RSW" H 8320 1446 50  0000 L CNN
+F 0 "RSW1" H 8320 1446 50  0000 L CNN
 F 1 "100K" H 8320 1355 50  0000 L CNN
 F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P2.54mm_Vertical" V 8180 1400 50  0001 C CNN
 F 3 "~" H 8250 1400 50  0001 C CNN
@@ -524,4 +520,22 @@ F 3 "~" H 2950 1300 50  0001 C CNN
 	1    2950 1300
 	1    0    0    -1  
 $EndComp
+Text Notes 5000 5400 2    50   ~ 0
+JOIN
+Text Notes 4000 5400 2    50   ~ 0
+DATA
+Text Notes 3500 5400 2    50   ~ 0
+ACQUIRE
+Text Notes 2900 5400 2    50   ~ 0
+AWAKE
+Text Notes 4500 5400 2    50   ~ 0
+SENT
+Wire Wire Line
+	4900 4450 4900 4350
+Wire Wire Line
+	6650 4350 6650 3700
+Wire Wire Line
+	6650 3700 7350 3700
+Wire Wire Line
+	4900 4350 6650 4350
 $EndSCHEMATC

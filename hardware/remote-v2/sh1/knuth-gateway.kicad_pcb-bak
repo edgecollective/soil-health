@@ -1125,7 +1125,7 @@
   (gr_text OFF (at 25.9334 53.6448) (layer F.SilkS) (tstamp 5E711B7D)
     (effects (font (size 1.5 1.5) (thickness 0.3)))
   )
-  (gr_text pvos.org/soil-relay-v2 (at 16.4211 3.3147) (layer F.SilkS) (tstamp 5E711650)
+  (gr_text pvos.org/soil-relay-v2 (at 16.55064 3.5306) (layer F.SilkS) (tstamp 5E711650)
     (effects (font (size 1.5 1.5) (thickness 0.3)))
   )
   (gr_text AUX (at 11.9253 10.1981) (layer F.SilkS) (tstamp 5E710CBF)
